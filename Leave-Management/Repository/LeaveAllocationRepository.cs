@@ -46,5 +46,10 @@ namespace Leave_Management.Repository
             _db.LeaveAllocations.Update(entity);
             return Save();
         }
+
+        public bool Exists(int id)
+        {
+            return _db.LeaveAllocations.Any(e => e.Id.Equals(id));
+        }
     }
 }

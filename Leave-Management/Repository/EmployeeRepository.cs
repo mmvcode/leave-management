@@ -46,5 +46,10 @@ namespace Leave_Management.Repository
             _db.Employees.Update(entity);
             return Save();
         }
+
+        public bool Exists(int id)
+        {
+            return _db.Employees.Any(e => e.Id.Equals(id));
+        }
     }
 }

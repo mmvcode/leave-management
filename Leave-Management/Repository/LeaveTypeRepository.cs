@@ -52,5 +52,10 @@ namespace Leave_Management.Repository
         {
             throw new NotImplementedException();
         }
+
+        public bool Exists(int id)
+        {
+            return _db.LeaveTypes.Any(e => e.Id.Equals(id));
+        }
     }
 }
