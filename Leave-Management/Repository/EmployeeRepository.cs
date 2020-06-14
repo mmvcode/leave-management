@@ -36,6 +36,11 @@ namespace Leave_Management.Repository
             return _db.Employees.Find(id);
         }
 
+        public Employee FindById(string id)
+        {
+            return _db.Employees.Find(id);
+        }
+
         public bool Save()
         {
             return _db.SaveChanges() > 0;

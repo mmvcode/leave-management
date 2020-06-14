@@ -10,6 +10,7 @@ using Leave_Management.Contracts;
 using Leave_Management.Repository;
 using AutoMapper;
 using Leave_Management.Mappings;
+using Leave_Management.Factories;
 
 namespace Leave_Management
 {
@@ -38,14 +39,16 @@ namespace Leave_Management
             // ViewModel Mappers with DB Models (AutoMapper)
             services.AddAutoMapper(typeof(ModelMapper));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<Employee> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -65,6 +68,7 @@ namespace Leave_Management
 
             app.UseAuthentication();
             app.UseAuthorization();
+            SeedData.Seed(userManager, roleManager);
 
             app.UseEndpoints(endpoints =>
             {
@@ -73,6 +77,8 @@ namespace Leave_Management
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            
         }
     }
 }

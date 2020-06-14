@@ -4,5 +4,6 @@ namespace Leave_Management.Contracts
 {
     public interface IEmployeeRepository : IRepositoryBase<Employee>
     {
+        Employee FindById(string id);
     }
 }
